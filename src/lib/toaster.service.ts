@@ -14,8 +14,13 @@ import { TextComponent } from "./text/text.component";
 import { and } from "ng-packagr/lib/graph/select";
 
 export interface ToasterConfig {
-  position?: "top-left" | "top-right" | "bottom-left" | "bottom-right";
-  slideInFrom?: "top" | "right" | "bottom" | "left";
+  position?:
+    | "top"
+    | "top-left"
+    | "top-right"
+    | "bottom-left"
+    | "bottom-right"
+    | "bottom";
   timeout?: number | null;
   showCloseButton?: boolean;
 }
@@ -32,6 +37,7 @@ export interface ToastRef {
   componentRef: ComponentRef<any>;
   timeout?: any;
   instance: any;
+  config: ToasterConfig;
 }
 
 @Injectable({
@@ -44,11 +50,9 @@ export class ToasterService {
   private contentContainerMap = new Map<HTMLElement, ToastRef>();
   private defaultConfig: ToasterConfig = {
     position: "bottom-right",
-    slideInFrom: "bottom",
-    timeout: 3000,
+    timeout: 5000,
     showCloseButton: true,
   };
-  private offset = 10; // Offset between stacked notifications
 
   constructor(
     private appRef: ApplicationRef,
@@ -56,7 +60,7 @@ export class ToasterService {
     @Inject(DOCUMENT) private document: Document,
   ) {
     this.toasterHost = this.document.createElement("div");
-    this.toasterHost.classList.add("toaster-host");
+    this.toasterHost.classList.add("toast-host");
     this.document.body.appendChild(this.toasterHost);
   }
 
@@ -89,6 +93,7 @@ export class ToasterService {
       contentContainerElement,
       componentRef,
       instance: componentRef.instance,
+      config,
     };
     this.toasts.push(componentRef.instance);
     this.toastMap.set(componentRef.instance, toastRef);
@@ -118,7 +123,7 @@ export class ToasterService {
       }
 
       // Add closing animation
-      toastRef.containerElement.classList.add("toaster-closing");
+      toastRef.containerElement.classList.add("toast-closing");
 
       // Remove after animation completes
       setTimeout(() => {
@@ -132,7 +137,7 @@ export class ToasterService {
         this.toasts.splice(this.toasts.indexOf(toast), 1);
 
         this.positionNotifications();
-      }, 300); // Match animation duration
+      }, 300);
     }
   }
 
@@ -152,18 +157,17 @@ export class ToasterService {
     config: ToasterConfig,
   ): [HTMLElement, HTMLElement] {
     const containerElement = this.document.createElement("div");
-    containerElement.classList.add("toaster-notification");
-    containerElement.classList.add(`toaster-${config.position}`);
-
-    if (config.slideInFrom) {
-      containerElement.classList.add(
-        `toaster-slide-from-${config.slideInFrom}`,
-      );
-    }
+    containerElement.classList.add("toast-notification");
+    containerElement.classList.add(`toast-${config.position}`);
+    containerElement.classList.add(
+      config.position?.match(/top/)
+        ? "toast-slide-from-top"
+        : "toast-slide-from-bottom",
+    );
 
     if (config.showCloseButton) {
       const closeButton = this.document.createElement("button");
-      closeButton.classList.add("toaster-close");
+      closeButton.classList.add("toast-close");
       closeButton.innerHTML = "&times;";
 
       closeButton.addEventListener("click", () => {
@@ -175,7 +179,7 @@ export class ToasterService {
     }
 
     const contentContainerElement = this.document.createElement("div");
-    contentContainerElement.classList.add("toaster-content");
+    contentContainerElement.classList.add("toast-content");
     containerElement.appendChild(contentContainerElement);
 
     this.toasterHost.appendChild(containerElement);
@@ -187,15 +191,13 @@ export class ToasterService {
    * Position all notifications with proper stacking
    */
   private positionNotifications(): void {
-    const notifications = Array.from(this.toastMap.values());
-    notifications.forEach((notification, index) => {
-      const element = notification.contentContainerElement
-        .parentElement as HTMLElement;
-      if (element) {
-        // Calculate position based on index
-        const translateY = index * (element.offsetHeight + this.offset);
-        element.style.transform = `translateY(-${translateY}px)`;
+    for (const toast of this.toasts) {
+      const toastRef = this.toastMap.get(toast);
+      if (toastRef) {
+        toastRef.containerElement.style[
+          toastRef.config.position?.match(/^top/) ? "top" : "bottom"
+        ] = `${(this.toasts.length - this.toasts.indexOf(toast) - 1) * 1.5}em`;
       }
-    });
+    }
   }
 }

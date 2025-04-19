@@ -1,5 +1,5 @@
 /* Toaster host container */
-.toaster-host {
+.toast-host {
   position: fixed;
   width: 100%;
   height: 100%;
@@ -8,7 +8,7 @@
 }
 
 /* Base notification styles */
-.toaster-notification {
+.toast-notification {
   position: fixed;
   display: flex;
   flex-direction: column;
@@ -18,28 +18,32 @@
   color: #333333;
   border-radius: 4px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-  margin: 10px;
+  margin: 2em;
   overflow: hidden;
   pointer-events: auto;
   transition: transform 0.3s ease, opacity 0.3s ease;
   animation: toaster-fade-in 0.3s ease forwards;
 }
 
+.toast-notification:hover {
+  z-index: 1;
+}
+
 /* Notification content */
-.toaster-content {
+.toast-content {
   padding: 12px;
   flex-grow: 1;
   word-break: break-word;
 }
 
 /* Text notification */
-.toaster-text {
+.toast-text {
   margin: 0;
   padding: 0;
 }
 
 /* Close button */
-.toaster-close {
+.toast-close {
   position: absolute;
   top: 8px;
   right: 8px;
@@ -60,51 +64,43 @@
   transition: background-color 0.2s ease;
 }
 
-.toaster-close:hover {
+.toast-close:hover {
   background-color: rgba(0, 0, 0, 0.05);
   color: #666666;
 }
 
 /* Position classes */
-.toaster-top-left {
+.toast-top-left {
   top: 0;
   left: 0;
 }
 
-.toaster-top-right {
+.toast-top-right {
   top: 0;
   right: 0;
 }
 
-.toaster-bottom-left {
+.toast-bottom-left {
   bottom: 0;
   left: 0;
 }
 
-.toaster-bottom-right {
+.toast-bottom-right {
   bottom: 0;
   right: 0;
 }
 
 /* Slide-in animations */
-.toaster-slide-from-top {
-  animation: toaster-slide-from-top 0.3s ease forwards;
+.toast-slide-from-top {
+  animation: toaster-slide-from-top 0.5s ease forwards;
 }
 
-.toaster-slide-from-right {
-  animation: toaster-slide-from-right 0.3s ease forwards;
-}
-
-.toaster-slide-from-bottom {
-  animation: toaster-slide-from-bottom 0.3s ease forwards;
-}
-
-.toaster-slide-from-left {
-  animation: toaster-slide-from-left 0.3s ease forwards;
+.toast-slide-from-bottom {
+  animation: toaster-slide-from-bottom 0.5s ease forwards;
 }
 
 /* Closing animation */
-.toaster-closing {
+.toast-closing {
   animation: toaster-fade-out 0.3s ease forwards;
 }
 
@@ -129,36 +125,18 @@
 
 @keyframes toaster-slide-from-top {
   from {
-    transform: translateY(-100%);
+    transform: translateY(-4em);
   }
   to {
-    transform: translateY(0);
-  }
-}
-
-@keyframes toaster-slide-from-right {
-  from {
-    transform: translateX(100%);
-  }
-  to {
-    transform: translateX(0);
+    transform: translateY(-2em);
   }
 }
 
 @keyframes toaster-slide-from-bottom {
   from {
-    transform: translateY(100%);
+    transform: translateY(4em);
   }
   to {
     transform: translateY(0);
-  }
-}
-
-@keyframes toaster-slide-from-left {
-  from {
-    transform: translateX(-100%);
-  }
-  to {
-    transform: translateX(0);
   }
 }
