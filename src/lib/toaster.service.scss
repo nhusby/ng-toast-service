@@ -125,18 +125,22 @@
 
 @keyframes toaster-slide-from-top {
   from {
-    transform: translateY(-4em);
+    opacity: 0;
+    transform: translateY(-2em);
   }
   to {
-    transform: translateY(-2em);
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 
 @keyframes toaster-slide-from-bottom {
   from {
-    transform: translateY(4em);
+    opacity: 0;
+    transform: translateY(2em);
   }
   to {
+    opacity: 1;
     transform: translateY(0);
   }
 }

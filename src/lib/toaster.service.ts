@@ -194,9 +194,12 @@ export class ToasterService {
     for (const toast of this.toasts) {
       const toastRef = this.toastMap.get(toast);
       if (toastRef) {
+        const toasts = Array.from(this.toastMap.values()).filter(
+          (filterRef) => filterRef.config.position === toastRef.config.position,
+        );
         toastRef.containerElement.style[
           toastRef.config.position?.match(/^top/) ? "top" : "bottom"
-        ] = `${(this.toasts.length - this.toasts.indexOf(toast) - 1) * 1.5}em`;
+        ] = `${(toasts.length - toasts.indexOf(toastRef) - 1) * 1.5}em`;
       }
     }
   }
