@@ -1,0 +1,25 @@
+{
+  "name": "ng-toaster",
+  "version": "0.0.1",
+  "peerDependencies": {
+    "@angular/common": "^19.2.0",
+    "@angular/core": "^19.2.0"
+  },
+  "dependencies": {
+    "tslib": "^2.3.0"
+  },
+  "sideEffects": false,
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nhusby/ng-toaster.git"
+  },
+  "keywords": [
+    "angular",
+    "toaster",
+    "notification",
+    "toast",
+    "alert"
+  ],
+  "author": "Nick Husby",
+  "license": "MIT"
+}
