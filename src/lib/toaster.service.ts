@@ -16,7 +16,7 @@ import { and } from "ng-packagr/lib/graph/select";
 export interface ToasterConfig {
   position?: "top-left" | "top-right" | "bottom-left" | "bottom-right";
   slideInFrom?: "top" | "right" | "bottom" | "left";
-  timeout?: number;
+  timeout?: number | null;
   showCloseButton?: boolean;
 }
 
