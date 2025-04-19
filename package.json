@@ -1,5 +1,5 @@
 {
-  "name": "ng-toaster",
+  "name": "ng-toast-service",
   "version": "0.0.1",
   "peerDependencies": {
     "@angular/common": "^19.2.0",
@@ -11,7 +11,7 @@
   "sideEffects": false,
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/nhusby/ng-toaster.git"
+    "url": "git+https://github.com/nhusby/ng-toast-service.git"
   },
   "keywords": [
     "angular",

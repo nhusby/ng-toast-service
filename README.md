@@ -1,19 +1,19 @@
-# ng-toaster
+# ng-toast-service
 
 A simple, customizable notification service for Angular applications. This service shows notifications that slide onto the screen with configurable behavior.
 
 ## Features
 
 - Show notifications that slide onto the screen
-- Configurable position, slide-in direction, and timeout
+- Configurable position and timeout
 - Stack multiple notifications with offset
 - Close button for each notification
-- Support for text, component, and template-based notifications
+- Support for text notifications
 
 ## Installation
 
 ```bash
-npm install ng-toaster
+npm install ng-toast-service
 ```
 
 ## Usage
@@ -21,7 +21,7 @@ npm install ng-toaster
 ### Import the service
 
 ```typescript
-import { ToasterService } from 'ng-toaster';
+import { ToasterService } from 'ng-toast-service';
 
 @Component({
   // ...
@@ -37,6 +37,16 @@ export class YourComponent {
 this.toasterService.toast('This is a notification message');
 ```
 
+### Customize notification behavior
+
+```typescript
+this.toasterService.toast('This is a notification message', {
+  position: 'top-right',       // 'top', 'top-left', 'top-right', 'bottom-left', 'bottom-right', 'bottom'
+  timeout: 5000,               // Time in milliseconds before auto-close (0 to disable)
+  showCloseButton: true        // Whether to show a close button
+});
+```
+
 ### Show a notification with a component
 
 ```typescript
@@ -47,38 +57,12 @@ const notification = this.toasterService.toast(YourNotificationComponent, {
   // Optional bindings for your component
   message: 'Hello World',
   type: 'success'
+}, {
+  showCloseButton: false
 });
 
 // You can now use the returned component instance
 console.log(notification.message); // Outputs: "Hello World"
-```
-
-### Show a notification with a template
-
-```typescript
-// In your component
-@ViewChild('notificationTemplate') notificationTemplate!: TemplateRef<any>;
-
-// Later in your code
-const context = {
-  message: 'Hello World',
-  type: 'success'
-};
-const templateContext = this.toasterService.showTemplate(this.notificationTemplate, context);
-
-// You can now use the returned template context
-console.log(templateContext.message); // Outputs: "Hello World"
-```
-
-### Customize notification behavior
-
-```typescript
-this.toasterService.toast('This is a notification message', {
-  position: 'top-right',       // 'top-left', 'top-right', 'bottom-left', 'bottom-right'
-  slideInFrom: 'top',          // 'top', 'right', 'bottom', 'left'
-  timeout: 5000,               // Time in milliseconds before auto-close (0 to disable)
-  showCloseButton: true        // Whether to show a close button
-});
 ```
 
 ### Close notifications
@@ -97,30 +81,40 @@ this.toasterService.closeAll();
 The default configuration is:
 
 ```typescript
-{
+const defaultConfig = {
   position: 'bottom-right',
-  slideInFrom: 'bottom',
-  timeout: 3000,
+  timeout: 5000,
   showCloseButton: true
-}
+};
 ```
 
 ## Styling
 
 The package includes default styling in `toaster.service.css`, but you can override it by targeting the following CSS classes:
 
-- `.toaster-host`: The container for all notifications
-- `.toaster-notification`: The notification element
-- `.toaster-content`: The content container
-- `.toaster-text`: Text content
-- `.toaster-close`: Close button
+- `.toast-host`: The container for all notifications
+- `.toast-notification`: The notification element
+- `.toast-content`: The content container
+- `.toast-text`: Text content
+- `.toast-close`: Close button
+
+Position classes:
+- `.toast-top-left`
+- `.toast-top-right`
+- `.toast-bottom-left`
+- `.toast-bottom-right`
+
+Animation classes:
+- `.toast-slide-from-top`
+- `.toast-slide-from-bottom`
+- `.toast-closing`
 
 ## Building
 
 To build the library, run:
 
 ```bash
-ng build ng-toaster
+ng build ng-toast-service
 ```
 
 ## License

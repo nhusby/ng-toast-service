@@ -1,5 +1,5 @@
 /*
- * Public API Surface of ng-toaster
+ * Public API Surface of ng-toast-service
  */
 
 export * from "./lib/toaster.service";
